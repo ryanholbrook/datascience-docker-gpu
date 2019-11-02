@@ -3,7 +3,7 @@ FROM jupyter/datascience-notebook
 
 LABEL maintainer="Ryan Holbrook <ryanholbrook@mathformachines.com>"
 
-USER $NB_UID
+USER root
 
 # Cuda support
 COPY --from=nvidia /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/
@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ln -s /usr/local/cuda-10.1 /usr/local/cuda && \
         ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
         apt-get autoremove -y && \
-        apt-get clean && \
+        apt-get clean
 ENV CUDA_HOME=/usr/local/cuda
 
 # Kaggle
@@ -56,7 +56,6 @@ RUN conda install --quiet --yes \
         'r-gmp' \
         'r-mlr' \
         'r-topicmodels' \
-        'r-xgboost-gpu' \
         'r-lightgbm' \
         'r-catboost' \
         'r-naivebayes' \
@@ -67,8 +66,8 @@ RUN conda install --quiet --yes \
 
 # Extra Python Libraries
 RUN conda install --quiet --yes \
-        'pyjanitor'
-        'flask-sqlalchemy'
+        'pyjanitor' \
+        'flask-sqlalchemy' \
         && \
         conda clean --all -f -y && \
         fix-permissions $CONDA_DIR && \
@@ -76,30 +75,26 @@ RUN conda install --quiet --yes \
 
 # Pytorch
 RUN conda install --quiet --yes \
-        'pytorch=1.0.*' 'torchvision=0.2.*' -c pytorch && \
+        'pytorch=1.3.*' 'torchvision=0.4.*' -c pytorch && \
         conda clean --all -f -y && \
         fix-permissions $CONDA_DIR && \
         fix-permissions /home/$NB_USER
 
 # Tensorflow and Keras
-RUN conda install --quiet --yes \
-        'tensorflow-gpu=1.12.*'\
-        'keras-gpu=2.2.*' && \
+RUN conda install -c anaconda --quiet --yes \
+        'keras-gpu' && \
         conda clean --all -f -y && \
         fix-permissions $CONDA_DIR && \
         fix-permissions /home/$NB_USER
 
-
 RUN conda install --quiet --yes \
-        'gnupg'\
+        'gnupg' && \
         conda clean --all -f -y && \
         fix-permissions $CONDA_DIR && \
         fix-permissions /home/$NB_USER
 
 # TODO Add R config files
-# ADD
-
-USER root
+# ADD .Rprofile .Renvironment
 
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
 
