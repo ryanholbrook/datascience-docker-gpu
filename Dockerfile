@@ -39,8 +39,7 @@ ENV CUDA_HOME=/usr/local/cuda
 
 # Kaggle
 RUN conda install --quiet --yes \
-        'kaggle'
-        && \
+        'kaggle' && \
         conda clean --all -f -y && \
         fix-permissions $CONDA_DIR && \
         fix-permissions /home/$NB_USER
@@ -49,18 +48,18 @@ RUN conda install --quiet --yes \
 
 # Extra R Libraries
 RUN conda install --quiet --yes \
-        'r-essentials'
-        'r-import'
-        'r-rgl'
-        'r-rjava'
-        'r-rweka'
-        'r-gmp'
-        'r-mlr'
-        'r-topicmodels'
-        'r-xgboost'
-        'r-lightgbm'
-        'r-catboost'
-        'r-naivebayes'
+        'r-essentials' \
+        'r-import' \
+        'r-rgl' \
+        'r-rjava' \
+        'r-rweka' \
+        'r-gmp' \
+        'r-mlr' \
+        'r-topicmodels' \
+        'r-xgboost-gpu' \
+        'r-lightgbm' \
+        'r-catboost' \
+        'r-naivebayes' \
         && \
         conda clean --all -f -y && \
         fix-permissions $CONDA_DIR && \
