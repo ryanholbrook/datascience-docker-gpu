@@ -40,4 +40,8 @@ RUN conda install --quiet --yes \
 # TODO Add R config files
 # ADD .Rprofile .Renvironment
 
+USER root
+
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
+
+USER $NB_UID
