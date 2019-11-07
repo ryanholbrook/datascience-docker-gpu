@@ -23,5 +23,4 @@ RUN pip install ax-platform && \
     pip install skorch && \
     pip install fastai && \
     pip install pyro-ppl && \
-    pip install flair && \
-    rm -rf /root/.cache/pip/*
+    pip install flair
