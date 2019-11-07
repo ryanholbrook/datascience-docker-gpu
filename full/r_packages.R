@@ -25,13 +25,35 @@ install.packages(
     # Features
     "vip",
     # Models
+    "adabag",
+    "brms",
+    "C50",
+    "Cubist",
+    "DiceKriging",
+    "e1071",
+    "earth",
+    "elasticnet",
     "forecast",
+    "gbm"
+    "glmnet",
     "kernlab",
+    "kknn",
+    "klaR",
+    "laGP",
+    "MASS",
+    "mboost",
+    "mda",
     "naivebayes",
     "np",
     "nns",
+    "nnet",
+    "party",
+    "pls"
     "randomForest",
     "ranger",
+    "Rborist",
+    "rpart",
+    "sda",
     "smooth",
     # Optimization
     "mlrMBO",
@@ -39,3 +61,4 @@ install.packages(
     "DALEX",
     "DALEXtra")
 
+install.packages("liquidSVM", configure.args = "native /usr/local/cuda")

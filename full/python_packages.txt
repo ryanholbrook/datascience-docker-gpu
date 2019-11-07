@@ -1,0 +1,13 @@
+# thunder libraries don't support CUDA 10 yet
+# thundersvm
+# thundergbm
+
+dash == 1.4.1 && \
+dash-daq == 0.2.1 && \
+dash-bootstrap-components
+
+
+
+
+
+
