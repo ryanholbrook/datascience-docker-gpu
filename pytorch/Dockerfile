@@ -1,11 +1,11 @@
 FROM rholbrook/datascience:cuda-only
 
 RUN conda install --quiet --yes -c pytorch \
-        'pytorch=1.3.*' \
-        'torchvision=0.4.*' \
+        'pytorch' \
+        'torchvision' \
         'torchtext' \
         'torchaudio' \
-        'ignite=0.2.*' \
+        'ignite' \
         'captum' \
         && \
     conda clean --all -f -y && \
@@ -23,4 +23,5 @@ RUN pip install ax-platform && \
     pip install skorch && \
     pip install fastai && \
     pip install pyro-ppl && \
-    pip install flair
+    pip install flair && \
+    rm -rf /root/.cache/pip/*
