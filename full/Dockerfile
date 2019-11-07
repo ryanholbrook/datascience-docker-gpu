@@ -39,6 +39,9 @@ RUN pip install xgboost && \
 # ADD r_packages.R
 # RUN Rscript r_packages.R
 
+ADD .Rprofile
+ADD .Renviron
+
 USER root
 
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
