@@ -8,3 +8,9 @@ There are three images in this repository:
   * `rholbrook/datascience:full` with, in addition, for Python [XGBoost](https://github.com/dmlc/xgboost), [LightGBM](https://github.com/microsoft/LightGBM), [CatBoost](https://github.com/catboost/catboost), and some [Dash](https://github.com/plotly/dash) libraries for building dashboards; for R a number of common libraries, especially those with external dependencies.
 
 The intention is for someone to be able to have a complete development environment for data science and machine learning with a minimum of fuss.
+
+-----
+
+Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-docker-gpu) for issues, pull requests, etc.
+
+
