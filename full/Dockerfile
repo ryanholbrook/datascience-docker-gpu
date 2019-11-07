@@ -1,7 +1,9 @@
 FROM rholbrook/datascience:pytorch
 
-# Extra Python Libraries
+# Conda Libraries
+# For Python
 RUN conda install --quiet --yes \
+        'flake8' \
         'pyjanitor' \
         'flask-sqlalchemy' \
         && \
@@ -9,16 +11,7 @@ RUN conda install --quiet --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# For making dashboards
-RUN pip install dash==1.4.1 && \
-    pip install dash-daq==0.2.1 && \
-    pip install dash-bootstrap-components
-
-RUN pip install xgboost && \
-    pip install lightgbm && \
-    pip install catboost
-
-# Extra R Libraries
+# For R
 RUN conda install --quiet --yes \
         'r-essentials' \
         'r-rgl' \
@@ -35,10 +28,16 @@ RUN conda install --quiet --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# RUN Rscript /r_packages.R
+# PyPI and CRAN Libraries
+RUN pip install xgboost && \
+    pip install lightgbm && \
+    pip install catboost
 
-# TODO Add R config files
-# ADD .Rprofile .Renvironment
+# TODO User libraries
+# ADD python_packages.txt
+# RUN pip install -r python_packages.txt
+# ADD r_packages.R
+# RUN Rscript r_packages.R
 
 USER root
 
