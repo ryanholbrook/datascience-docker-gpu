@@ -23,5 +23,7 @@ RUN pip install ax-platform && \
     pip install fastai && \
     pip install pytorch-lightning && \
     pip install pyro-ppl && \
-    pip install flair
+    pip install flair &&
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
     
