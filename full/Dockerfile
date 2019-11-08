@@ -6,6 +6,7 @@ RUN conda install --quiet --yes \
         'flake8' \
         'pyjanitor' \
         'flask-sqlalchemy' \
+        'gcc' \ # xgboost needs
         && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
@@ -32,6 +33,10 @@ RUN conda install --quiet --yes \
 RUN pip install xgboost && \
     pip install lightgbm && \
     pip install catboost
+    && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
 
 # TODO User libraries
 # ADD python_packages.txt
