@@ -32,8 +32,7 @@ RUN conda install --quiet --yes \
 # PyPI and CRAN Libraries
 RUN pip install xgboost && \
     pip install lightgbm && \
-    pip install catboost
-    && \
+    pip install catboost && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
