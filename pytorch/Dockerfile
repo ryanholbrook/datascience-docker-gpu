@@ -6,7 +6,6 @@ RUN conda install --quiet --yes -c pytorch \
         'torchtext' \
         'torchaudio' \
         'ignite' \
-        'captum' \
         && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
@@ -22,5 +21,7 @@ RUN pip install ax-platform && \
     pip install torch-geometric && \
     pip install skorch && \
     pip install fastai && \
+    pip install pytorch-lightning && \
     pip install pyro-ppl && \
     pip install flair
+    
