@@ -13,4 +13,16 @@ The intention is for someone to be able to have a complete development environme
 
 Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-docker-gpu) for issues, pull requests, etc.
 
+-----
 
+## Usage Examples
+
+Test the installation:
+
+`docker run --rm --gpus all rholbrook/datascience:cuda-only nvidia-smi`
+
+Open an IPython session:
+`docker run --rm -it --gpus all rholbrook/datascience:pytorch ipython`
+
+Start a Jupyter notebook server:
+`docker run --rm --gpus all rholbrook/datascience:full`
