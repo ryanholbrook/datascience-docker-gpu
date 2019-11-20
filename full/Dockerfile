@@ -36,18 +36,19 @@ RUN pip install xgboost && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-
 # TODO User libraries
 # ADD python_packages.txt
 # RUN pip install -r python_packages.txt
 # ADD r_packages.R
 # RUN Rscript r_packages.R
 
-ADD .Rprofile
-ADD .Renviron
+# ADD .Rprofile
+# ADD .Renviron
 
 USER root
 
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
+# fix for devtools::github bug caused by conda
+RUN ln -s /bin/tar /bin/gtar
 
 USER $NB_UID
