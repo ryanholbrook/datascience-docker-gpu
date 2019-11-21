@@ -5,9 +5,7 @@ FROM rholbrook/datascience:pytorch
 RUN conda install --quiet --yes \
         'flake8' \
         'pyjanitor' \
-        'flask-sqlalchemy' \
-        # xgboost needs gcc
-        'gcc' && \
+        'flask-sqlalchemy' && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
