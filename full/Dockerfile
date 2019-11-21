@@ -6,8 +6,7 @@ RUN conda install --quiet --yes \
         'flake8' \
         'pyjanitor' \
         'flask-sqlalchemy' \
-        'gcc' \ # xgboost needs
-        && \
+        'gcc' && \ # xgboost needs
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -23,8 +22,7 @@ RUN conda install --quiet --yes \
         'r-lightgbm' \
         'r-rstan' \
         'r-shiny' \
-        'r-tidyverse' \
-        && \
+        'r-tidyverse' && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
