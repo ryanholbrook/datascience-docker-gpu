@@ -6,7 +6,8 @@ RUN conda install --quiet --yes \
         'flake8' \
         'pyjanitor' \
         'flask-sqlalchemy' \
-        'gcc' && \ # xgboost needs
+        # xgboost needs gcc
+        'gcc' && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
