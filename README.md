@@ -4,11 +4,16 @@ Docker images built off of [`jupyter/datascience-notebook`](https://github.com/j
 
 ## Quickstart
 Clone the repository.
-```git clone https://github.com/ryanholbrook/datascience-docker-gpu.git```
+```
+git clone https://github.com/ryanholbrook/datascience-docker-gpu.git
+```
 
 Download the image from Docker Hub and launch a Jupyter Notebook session with `/home/yourname/project/` as the working directory.
-```cd datascience-docker-gpu/full/
-./datasci.sh --project /home/yourname/project/```
+
+```
+cd datascience-docker-gpu/full/
+./datasci.sh --project /home/yourname/project/
+```
 
 ## Contents
 There are three images in this repository:
