@@ -1,8 +1,22 @@
 #!/bin/bash
+# launch the containter with X support
 # See https://skandhurkat.com/post/x-forwarding-on-docker/
 
-XAUTH=$HOME/.Xauthority
-touch $XAUTH
+# separate keyword and positional arguments
+KEYWORD=()
+POSITIONAL=()
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --*|-*)
+            KEYWORD+=("${1} ${2}")
+            shift 2
+            ;;
+        *)
+            POSITIONAL+=("${1}")
+            shift
+            ;;
+    esac
+done
 
 docker run \
        --name datascience \
@@ -12,7 +26,8 @@ docker run \
        --gpus all \
        --network=host\
        --env DISPLAY=$DISPLAY \
-       --volume $XAUTH:/home/jovyan/.Xauthority \
-       
+       --volume $XAUTHORITY:/home/jovyan/.Xauthority \
+       $KEYWORD \
        rholbrook/datascience:full \
-       start.sh "$@"
+       start.sh \
+       ${POSITIONAL}
