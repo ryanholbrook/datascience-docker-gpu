@@ -5,6 +5,7 @@ XAUTH=$HOME/.Xauthority
 touch $XAUTH
 
 docker run \
+       --name datascience \
        --rm \
        --interactive \
        --tty \
@@ -12,5 +13,6 @@ docker run \
        --network=host\
        --env DISPLAY=$DISPLAY \
        --volume $XAUTH:/home/jovyan/.Xauthority \
+       
        rholbrook/datascience:full \
        start.sh "$@"
