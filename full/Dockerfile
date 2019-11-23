@@ -44,7 +44,13 @@ RUN pip install xgboost && \
 
 USER root
 
+# Setup X forwarding
+RUN apt-get update
+RUN apt-get install -qqy x11-apps
+
+# Fix PATH weirdness  
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
+
 # fix for devtools::github bug caused by conda
 RUN ln -s /bin/tar /bin/gtar
 
