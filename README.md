@@ -1,8 +1,5 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/rholbrook/datascience)](https://hub.docker.com/repository/docker/rholbrook/datascience)
 [![Docker Stars](https://img.shields.io/docker/stars/rholbrook/datascience)](https://hub.docker.com/repository/docker/rholbrook/datascience)
-**cuda-only** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
-**pytorch** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
-**full**  [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
 
 # GPU-Enabled Docker Images
 
@@ -31,6 +28,9 @@ There are three images in this repository:
 
 The intention is for someone to be able to have a complete development environment for data science and machine learning with a minimum of fuss.
 
+ * **:cuda-only** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
+  * **:pytorch** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
+  * **:full**  [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
 
 ## Usage Examples
 
