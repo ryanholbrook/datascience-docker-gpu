@@ -9,7 +9,6 @@ git clone https://github.com/ryanholbrook/datascience-docker-gpu.git
 ```
 
 Download the image from Docker Hub and launch a Jupyter Notebook session with `/home/yourname/project/` as the working directory.
-
 ```
 cd datascience-docker-gpu/full/
 ./datasci.sh --project /home/yourname/project/
@@ -32,16 +31,21 @@ Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-d
 ## Usage Examples
 
 Test the installation:
-`docker run --rm --gpus all rholbrook/datascience:cuda-only nvidia-smi`
+```
+docker run --rm --gpus all rholbrook/datascience:cuda-only nvidia-smi
+```
 
 Open an IPython session:
-`docker run --rm -it --gpus all rholbrook/datascience:pytorch ipython`
+```
+docker run --rm -it --gpus all rholbrook/datascience:pytorch ipython
+```
 
 Start a Jupyter notebook server:
-`docker run --rm --gpus all rholbrook/datascience:full`
+```
+docker run --rm --gpus all rholbrook/datascience:full
+```
 
 In the `full` directory there is a script `datasci.sh`. Running it will launch the container as so:
-
 ``` 
 docker run \
        --name datascience \
@@ -58,9 +62,9 @@ docker run \
        $POSITIONAL
 ```
        
-where `$KEYWORD` and `$POSITIONAL` are options passed to `datasci.sh` in the usual manner of `docker`. This will run the container with X-forwarding in case you want to open X windows on the host machine (for plotting from iPython, say).
+where `$KEYWORD` and `$POSITIONAL` are options passed to `datasci.sh` in the usual manner of `docker`. This will run the container with X-forwarding in case you want to open X windows on the host machine (for plotting from iPython, for instance).
 
 Say you wanted to start an iPython session and use the directory `/home/ryan/project/` as your project directory for persistent storage. You could do:
-`datasci.sh --project /home/ryan/project/ ipython`
+```datasci.sh --project /home/ryan/project/ ipython```
 
 This will mount `/home/ryan/project/` to `/home/jovyan/work/` in the container, which is the default storage directory in the Jupyter stacks.
