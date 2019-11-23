@@ -2,6 +2,8 @@
 
 Docker images built off of [`jupyter/datascience-notebook`](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook), which has environments for R, Python, and Julia. Includes GPU support.
 
+Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-docker-gpu) for issues, pull requests, etc.
+
 ### Quickstart
 Clone the repository.
 ```
@@ -22,11 +24,6 @@ There are three images in this repository:
 
 The intention is for someone to be able to have a complete development environment for data science and machine learning with a minimum of fuss.
 
------
-
-Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-docker-gpu) for issues, pull requests, etc.
-
------
 
 ## Usage Examples
 
