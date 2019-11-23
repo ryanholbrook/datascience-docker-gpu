@@ -28,9 +28,9 @@ There are three images in this repository:
 
 The intention is for someone to be able to have a complete development environment for data science and machine learning with a minimum of fuss.
 
- * **:cuda-only** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
-  * **:pytorch** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
-  * **:full**  [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
+  * [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags) `:cuda-only`
+  * [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags) `:pytorch` 
+  * [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags) `:full`
 
 ## Usage Examples
 
