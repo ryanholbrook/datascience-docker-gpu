@@ -2,7 +2,7 @@
 
 Docker images built off of [`jupyter/datascience-notebook`](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook), which has environments for R, Python, and Julia. Includes GPU support.
 
-## Quickstart
+### Quickstart
 Clone the repository.
 ```
 git clone https://github.com/ryanholbrook/datascience-docker-gpu.git
@@ -42,7 +42,8 @@ Start a Jupyter notebook server:
 
 In the `full` directory there is a script `datasci.sh`. Running it will launch the container as so:
 
-``` docker run \
+``` 
+docker run \
        --name datascience \
        --rm \
        --interactive \
@@ -54,7 +55,8 @@ In the `full` directory there is a script `datasci.sh`. Running it will launch t
        $KEYWORD \
        rholbrook/datascience:full \
        start.sh \
-       $POSITIONAL ```
+       $POSITIONAL
+```
        
 where `$KEYWORD` and `$POSITIONAL` are options passed to `datasci.sh` in the usual manner of `docker`. This will run the container with X-forwarding in case you want to open X windows on the host machine (for plotting from iPython, say).
 
