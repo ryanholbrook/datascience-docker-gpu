@@ -7,6 +7,10 @@ KEYWORD=()
 POSITIONAL=()
 while [[ "$#" -gt 0 ]]; do
     case $1 in
+        --project|-p)
+            PROJECT="${2}"
+            shift 2
+            ;;
         --*|-*)
             KEYWORD+=("${1} ${2}")
             shift 2
@@ -27,7 +31,8 @@ docker run \
        --network=host\
        --env DISPLAY=$DISPLAY \
        --volume $XAUTHORITY:/home/jovyan/.Xauthority \
+       --volume $PROJECT:/home/jovyan/work/ \
        $KEYWORD \
        rholbrook/datascience:full \
        start.sh \
-       ${POSITIONAL}
+       $POSITIONAL
