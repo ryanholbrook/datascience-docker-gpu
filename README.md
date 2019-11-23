@@ -1,6 +1,8 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/rholbrook/datascience)]
-[![Docker Stars](https://img.shields.io/docker/stars/rholbrook/datascience)]
-
+[![Docker Pulls](https://img.shields.io/docker/pulls/rholbrook/datascience)](https://hub.docker.com/repository/docker/rholbrook/datascience)
+[![Docker Stars](https://img.shields.io/docker/stars/rholbrook/datascience)](https://hub.docker.com/repository/docker/rholbrook/datascience)
+**cuda-only** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
+**pytorch** [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
+**full**  [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags)
 
 # GPU-Enabled Docker Images
 
@@ -22,9 +24,10 @@ cd datascience-docker-gpu/full/
 
 ## Contents
 There are three images in this repository:
-  * `rholbrook/datascience:cuda-only` [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://microbadger.com/images/rholbrook/datascience:cuda-only "Get your own image badge on microbadger.com") with [CUDA 10.0](https://developer.nvidia.com/cuda-zone) development libraries.
-  * `rholbrook/datascience:pytorch` [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://microbadger.com/images/rholbrook/datascience:cuda-only "Get your own image badge on microbadger.com") with, in addition, [Pytorch](https://pytorch.org/) and a number of its extension libraries: [Ignite](https://pytorch.org/ignite/), [fast.ai](https://www.fast.ai/), [Lightning](https://github.com/williamFalcon/pytorch-lightning), [skorch](https://github.com/skorch-dev/skorch), [Ax](https://ax.dev/), [GPyTorch](https://github.com/cornellius-gp/gpytorch), [Pyro](http://pyro.ai/), [Flair](https://github.com/zalandoresearch/flair), [PyTorch Geometric](https://github.com/rusty1s/pytorch_geometric), and [Captum](https://captum.ai/) <span style = "color:red"> (Temporarily removed due to Conda environment issues.) </span>
-  * `rholbrook/datascience:full` [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://microbadger.com/images/rholbrook/datascience:full "Get your own image badge on microbadger.com") with, in addition, for Python [XGBoost](https://github.com/dmlc/xgboost), [LightGBM](https://github.com/microsoft/LightGBM), [CatBoost](https://github.com/catboost/catboost), and some [Dash](https://github.com/plotly/dash) libraries for building dashboards; for R a number of common libraries, especially those with external dependencies.
+  * `rholbrook/datascience:cuda-only` with [CUDA 10.0](https://developer.nvidia.com/cuda-zone) development libraries.
+  * `rholbrook/datascience:pytorch` with, in addition, [Pytorch](https://pytorch.org/) and a number of its extension libraries: [Ignite](https://pytorch.org/ignite/), [fast.ai](https://www.fast.ai/), [Lightning](https://github.com/williamFalcon/pytorch-lightning), [skorch](https://github.com/skorch-dev/skorch), [Ax](https://ax.dev/), [GPyTorch](https://github.com/cornellius-gp/gpytorch), [Pyro](http://pyro.ai/), [Flair](https://github.com/zalandoresearch/flair), [PyTorch Geometric](https://github.com/rusty1s/pytorch_geometric), and [Captum](https://captum.ai/) <span style = "color:red"> (Captum temporarily removed due to Conda environment issues.) </span>
+  * `rholbrook/datascience:full`
+ with, in addition, for Python [XGBoost](https://github.com/dmlc/xgboost), [LightGBM](https://github.com/microsoft/LightGBM), [CatBoost](https://github.com/catboost/catboost), and some [Dash](https://github.com/plotly/dash) libraries for building dashboards; for R a number of common libraries, especially those with external dependencies.
 
 The intention is for someone to be able to have a complete development environment for data science and machine learning with a minimum of fuss.
 
