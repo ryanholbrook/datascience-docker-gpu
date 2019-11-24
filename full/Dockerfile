@@ -48,6 +48,9 @@ USER root
 RUN apt-get update
 RUN apt-get install -qqy x11-apps
 
+# Some useful utilities
+RUN apt-get install less rsync
+
 # Fix PATH weirdness  
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
 
