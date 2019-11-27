@@ -3,6 +3,8 @@
 # See https://skandhurkat.com/post/x-forwarding-on-docker/
 
 # separate keyword and positional arguments
+USER=$(id -u)
+UNAME=$(id -un)
 KEYWORD=()
 POSITIONAL=()
 while [[ "$#" -gt 0 ]]; do
@@ -22,25 +24,27 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
+XAUTH="/run/user/Xauthority"
+
+echo "User Name: ${UNAME}"
+echo "UID: ${USER}"
+echo "Project: ${PROJECT}"
+
 docker run \
-       --name datascience \
        --rm \
        --interactive \
        --tty \
        --gpus all \
        --network=host\
        --env DISPLAY=$DISPLAY \
-       --volume $XAUTHORITY:/home/jovyan/.Xauthority \
-       --volume $PROJECT:/home/jovyan/work/ \
-       -e CHOWN_HOME=yes \
-       -e CHOWN_HOME_OPTS='-R' \
-       # Changing to root here is necessary to set file permissions
-       # for the working directory. The startup script will change
-       # the user back to '1000(jovyan)' or whatever is declared
-       # via option. See here for more about the options available:
-       # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
-       -u root \
+       --env XAUTHORITY=$XAUTH \
+       --volume $XAUTHORITY:$XAUTH \
+       --env NB_USER=$UNAME \
+       --workdir "/home/$NB_USER" \
+       --volume $PROJECT:"/home/project" \
+       --user root \
        $KEYWORD \
        rholbrook/datascience:full \
-       start.sh \
-       $POSITIONAL
+       $POSITIONAL \
+       start.sh
+
