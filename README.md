@@ -13,11 +13,13 @@ Clone the repository.
 git clone https://github.com/ryanholbrook/datascience-docker-gpu.git
 ```
 
-Download the image from Docker Hub and launch a Jupyter Notebook session with `/home/yourname/project/` as the working directory.
+Download the image from Docker Hub and launch a Jupyter Notebook session with your (host) directory `/home/yourname/project/` mounted inside the container.
 ```
 cd datascience-docker-gpu/full/
 ./datasci.sh --project /home/yourname/project/
 ```
+
+**WARNING:** Only data in your `project` directory will be saved after the container exits. If you have data elsewhere and you quit the container, it is gone forever. *(You can also mount persistant storage with `--volume` as usual with `docker`.)*
 
 ## Contents
 There are three images in this repository:
@@ -49,26 +51,4 @@ Start a Jupyter notebook server:
 docker run --rm --gpus all rholbrook/datascience:full
 ```
 
-In the `full` directory there is a script `datasci.sh`. Running it will launch the container as so:
-``` 
-docker run \
-       --name datascience \
-       --rm \
-       --interactive \
-       --tty \
-       --gpus all \
-       --network=host\
-       --env DISPLAY=$DISPLAY \
-       --volume $XAUTHORITY:/home/jovyan/.Xauthority \
-       $KEYWORD \
-       rholbrook/datascience:full \
-       start.sh \
-       $POSITIONAL
-```
-       
-where `$KEYWORD` and `$POSITIONAL` are options passed to `datasci.sh` in the usual manner of `docker`. This will run the container with X-forwarding in case you want to open X windows on the host machine (for plotting from iPython, for instance).
-
-Say you wanted to start an iPython session and use the directory `/home/ryan/project/` as your project directory for persistent storage. You could do:
-```datasci.sh --project /home/ryan/project/ ipython```
-
-This will mount `/home/ryan/project/` to `/home/jovyan/work/` in the container, which is the default storage directory in the Jupyter stacks.
+In the `full` directory there is a script `start-shell.sh`. Running it will enter a `bash` shell with container options `-it --rm --gpus all` and X-forwarding enabled. Alternatively, specify a command to run instead of `bash`. You can also use of the usual `docker` [options](https://docs.docker.com/engine/reference/run/) or the [options](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html) from the original Jupyter images. See the script for more details.
