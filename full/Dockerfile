@@ -36,8 +36,8 @@ RUN pip install xgboost && \
 # TODO User libraries
 # ADD python_packages.txt
 # RUN pip install -r python_packages.txt
-# ADD r_packages.R
-# RUN Rscript r_packages.R
+# ADD install.R
+# RUN Rscript install.R
 
 # ADD .Rprofile
 # ADD .Renviron
