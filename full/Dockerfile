@@ -12,16 +12,13 @@ RUN conda install --quiet --yes \
 
 # For R
 RUN conda install --quiet --yes \
-        'r-essentials' \
+        'r-gmp' \
+        'r-lightgbm' \
+        'r-mlr' \
         'r-rgl' \
         'r-rjava' \
-        'r-rweka' \
-        'r-gmp' \
-        'r-mlr' \
-        'r-lightgbm' \
         'r-rstan' \
-        'r-shiny' \
-        'r-tidyverse' && \
+        'r-rweka' && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -33,23 +30,21 @@ RUN pip install xgboost && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# TODO User libraries
-# ADD python_packages.txt
-# RUN pip install -r python_packages.txt
-# ADD install.R
-# RUN Rscript install.R
-
 # ADD .Rprofile
 # ADD .Renviron
 
 USER root
 
-# Setup X forwarding
+# Install X11 and some useful shell utilites
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
-RUN apt-get install -qqy x11-apps
-
-# Some useful utilities
-RUN apt-get install less rsync
+RUN apt-get install -qqy --no-install-recommends \
+        x11-apps \
+        less \
+        rsync \
+        tmux && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Fix PATH weirdness  
 RUN ln -s /opt/conda/bin/* /usr/local/bin/

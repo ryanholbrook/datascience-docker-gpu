@@ -18,6 +18,7 @@ RUN conda install --quiet --yes -c gpytorch \
     fix-permissions /home/$NB_USER
 
 RUN pip install ax-platform && \
+    pip install captum && \
     pip install torch-geometric && \
     pip install skorch && \
     pip install fastai && \
