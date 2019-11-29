@@ -1,5 +1,20 @@
 FROM rholbrook/datascience:pytorch
 
+USER root
+
+# Install X11 and improve the shell
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install -qqy --no-install-recommends \
+        x11-apps \
+        less \
+        rsync \
+        tmux && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+USER $NB_UID
+
 # Conda Libraries
 # For Python
 RUN conda install --quiet --yes \
@@ -12,6 +27,9 @@ RUN conda install --quiet --yes \
 
 # For R
 RUN conda install --quiet --yes \
+        'r-drake' \
+        'r-future' \
+        'r-future.apply' \
         'r-gmp' \
         'r-lightgbm' \
         'r-mlr' \
@@ -35,18 +53,7 @@ RUN pip install xgboost && \
 
 USER root
 
-# Install X11 and some useful shell utilites
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update
-RUN apt-get install -qqy --no-install-recommends \
-        x11-apps \
-        less \
-        rsync \
-        tmux && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Fix PATH weirdness  
+# Fix PATH weirdness
 RUN ln -s /opt/conda/bin/* /usr/local/bin/
 
 # fix for devtools::github bug caused by conda
