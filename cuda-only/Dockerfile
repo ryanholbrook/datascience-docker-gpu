@@ -83,6 +83,8 @@ RUN echo "\n\
         \nCUDA_HOME=$CUDA_HOME \
         \nCUDA_PATH=$CUDA_PATH \
         \nPATH=$PATH" >> $(R RHOME)/etc/Renviron.site
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 
 ###### rocker/cuda:dev ######
