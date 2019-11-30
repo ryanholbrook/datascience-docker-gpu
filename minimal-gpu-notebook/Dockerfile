@@ -78,21 +78,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-mark hold libcudnn7 && \
     rm -rf /var/lib/apt/lists/*
 
+###### TensorRT ######
+## https://www.tensorflow.org/install/gpu
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libnvinfer5=5.1.5-1+cuda10.0 \
+        libnvinfer-dev=5.1.5-1+cuda10.0 && \
+    rm -rf /var/lib/apt/lists/*
 
 ###### rocker/cuda ######
-## Set up env variables in R
+## Set up env variables
 ENV CUDA_HOME=/usr/local/cuda
 ENV CUDA_PATH=/usr/local/cuda
 ENV PATH=$CUDA_HOME/bin:$PATH
 ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRARY_PATH
-
-RUN echo "\n\
-        \nCUDA_HOME=$CUDA_HOME \
-        \nCUDA_PATH=$CUDA_PATH \
-        \nPATH=$PATH" >> $(R RHOME)/etc/Renviron.site
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
 
 ###### rocker/cuda:dev ######
 ### required for linking OpenCL
