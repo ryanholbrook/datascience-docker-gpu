@@ -35,6 +35,7 @@ RUN conda install --quiet --yes \
         'r-devtools' \
         'r-docopt' \
         'r-dplyr' \
+        'r-drake' \
         'r-dtplyr' \
         'r-forecast' \
         'r-forcats' \
@@ -126,7 +127,11 @@ RUN ln -s $R_LIB_PATH/littler/bin/r /usr/local/bin/r && \
 
 USER $NB_USER
 RUN install2.r -l $R_LIB_PATH -r $CRAN \
-        reticulate renv tensorflow keras greta && \
+        renv \
+        reticulate \
+        tensorflow \
+        keras \
+        greta && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 

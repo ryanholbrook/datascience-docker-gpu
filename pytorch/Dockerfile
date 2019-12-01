@@ -19,14 +19,15 @@ RUN conda install --quiet --yes -c gpytorch \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-RUN pip install ax-platform && \
-    pip install captum && \
-    pip install torch-geometric && \
-    pip install skorch && \
-    pip install fastai && \
-    pip install pytorch-lightning && \
-    pip install pyro-ppl && \
-    pip install flair && \
+RUN pip install --no-cache-dir \
+        ax-platform \
+        captum \
+        torch-geometric \
+        skorch \
+        fastai \
+        pytorch-lightning \
+        pyro-ppl \
+        flair \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
     

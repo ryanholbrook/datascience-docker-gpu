@@ -3,12 +3,15 @@
 # See https://skandhurkat.com/post/x-forwarding-on-docker/
 
 # separate keyword and positional arguments
-USER=$(id -u)
-UNAME=$(id -un)
+DOTS=()
 KEYWORD=()
 POSITIONAL=()
 while [[ "$#" -gt 0 ]]; do
     case $1 in
+        --dot|-d)
+            DOTS+=("--volume ${2}:/home/jovyan/${2}")
+            shift 2
+            ;;
         --project|-p)
             PROJECT="${2}"
             shift 2
@@ -26,8 +29,7 @@ done
 
 XAUTH="/run/user/Xauthority"
 
-echo "User Name: ${UNAME}"
-echo "UID: ${USER}"
+echo "Running"
 echo "Project: ${PROJECT}"
 
 docker run \
@@ -39,12 +41,10 @@ docker run \
        --env DISPLAY=$DISPLAY \
        --env XAUTHORITY=$XAUTH \
        --volume $XAUTHORITY:$XAUTH \
-       --env NB_USER=$UNAME \
-       --workdir "/home/$NB_USER" \
-       --volume $PROJECT:"/home/project" \
-       --user root \
+       --volume $PROJECT:"/home/jovyan/project" \
+       $DOTS \
        $KEYWORD \
-       rholbrook/datascience:full \
+       rholbrook/gpu-notebook \
        $POSITIONAL \
        start.sh
 
