@@ -90,6 +90,7 @@ RUN conda install --quiet --yes \
         'r-lubridate' \
         'r-magrittr' \
         'r-mass' \
+        'r-mlbench' \
         'r-plyr' \
         'r-purrr' \
         'r-randomforest' \
@@ -153,6 +154,7 @@ ENV R_LIB_PATH "/opt/conda/lib/R/library"
 RUN ln -s $R_LIB_PATH/littler/bin/r /usr/local/bin/r && \
     ln -s $R_LIB_PATH/littler/examples/install.r /usr/local/bin/install.r && \
     ln -s $R_LIB_PATH/littler/examples/install2.r /usr/local/bin/install2.r && \
+    ln -s $R_LIB_PATH/littler/examples/installGithub.r /usr/local/bin/installGithub.r && \
     rm -rf /tmp/* && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -169,8 +171,9 @@ RUN install2.r -l $R_LIB_PATH -r $CRAN \
 ## Other Non-Conda Packages
 USER $NB_USER
 RUN install2.r -l $R_LIB_PATH -r $CRAN \
-        cabinets \
         renv && \
+    installGithub.r -l $R_LIB_PATH -r $CRAN \
+        'ropenscilabs/roomba' && \
     rm -rf /tmp/* && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
