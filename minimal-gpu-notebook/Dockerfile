@@ -44,7 +44,6 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 ENV NVIDIA_REQUIRE_CUDA "cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=410,driver<411"
 
-
 ###### nvidia/cuda:10.0-runtime ######
 ENV NCCL_VERSION 2.4.8
 
@@ -54,7 +53,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libnccl2=$NCCL_VERSION-1+cuda10.0 && \
     apt-mark hold libnccl2 && \
     rm -rf /var/lib/apt/lists/*
-
 
 ###### nvidia/cuda:10.0-devel ######
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -66,7 +64,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs
-
 
 ###### nvidia/cuda:10.0-cudnn7-devel ######
 ENV CUDNN_VERSION 7.6.5.32
@@ -96,5 +93,8 @@ ENV LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRARY_P
 ### required for linking OpenCL
 RUN mkdir -p /etc/OpenCL/vendors/ \
   && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+
+## Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
+RUN ln -s /bin/tar /bin/gtar
 
 USER $NB_UID

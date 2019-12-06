@@ -104,8 +104,8 @@ RUN pip install --no-cache-dir \
         tensorflow-gpu==2.0.0 \
         tensorflow-probability==0.8 \
         keras==2.3.1 && \
-        fix-permissions $CONDA_DIR && \
-        fix-permissions /home/$NB_USER
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 ########## Setup R ##########
 USER root
@@ -128,6 +128,8 @@ RUN ln -s $R_LIB_PATH/littler/bin/r /usr/local/bin/r && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+USER $NB_USER
+
 ## Tensorflow
 RUN install2.r -l $R_LIB_PATH -r $CRAN \
         tensorflow \
@@ -138,7 +140,6 @@ RUN install2.r -l $R_LIB_PATH -r $CRAN \
     fix-permissions /home/$NB_USER
 
 ## Other Non-Conda Packages
-USER $NB_USER
 RUN install2.r -l $R_LIB_PATH -r $CRAN \
         renv && \
     installGithub.r -l $R_LIB_PATH -r $CRAN \
