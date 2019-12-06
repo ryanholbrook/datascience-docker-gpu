@@ -12,7 +12,6 @@ RUN apt-get update && \
     fonts-dejavu \
     unixodbc \
     unixodbc-dev \
-    r-cran-rodbc \
     gfortran \
     gcc && \
     rm -rf /var/lib/apt/lists/*
@@ -49,81 +48,52 @@ RUN conda install --quiet --yes \
         'sqlalchemy' \
         'statsmodels' \
         'sympy' \
+        'unixodbc' \
         ##### R #####
+        'r-arrow' \
         'r-base' \
-        'r-blob' \
-        'r-broom' \
-        'r-crayon' \
+        'r-covr' \
         'r-curl' \
         'r-data.table' \
-        'r-dbi' \
-        'r-dbplyr' \
         'r-devtools' \
         'r-docopt' \
-        'r-dplyr' \
         'r-drake' \
-        'r-dtplyr' \
         'r-e1071' \
-        'r-forcats' \
-        'r-forecast' \
         'r-formatr' \
         'r-fst' \
         'r-future' \
         'r-future.apply' \
-        'r-ggplot2' \
         'r-glmnet' \
         'r-glue' \
         'r-gmp' \
         'r-goodpractice' \
-        'r-haven' \
         'r-here' \
-        'r-hexbin' \
         'r-hms' \
         'r-htmltools' \
-        'r-htmlwidgets' \
         'r-httr' \
         'r-irkernel' \
-        'r-jsonlite' \
-        'r-lattice' \
         'r-lintr' \
         'r-littler' \
-        'r-lubridate' \
-        'r-magrittr' \
         'r-mass' \
         'r-mlbench' \
-        'r-plyr' \
-        'r-purrr' \
+        'r-rodbc' \
         'r-randomforest' \
-        'r-readr' \
-        'r-readxl' \
-        'r-remotes' \
-        'r-reprex' \
         'r-reticulate' \
         'r-rgl' \
         'r-rio' \
         'r-rjava' \
         'r-rmarkdown' \
-        'r-rodbc' \
         'r-rpart' \
         'r-rsqlite' \
         'r-rstan' \
-        'r-rvest' \
         'r-rweka' \
         'r-servr' \
-        'r-sessioninfo' \
         'r-shiny' \
-        'r-sparklyr' \
-        'r-stringr' \
         'r-testthat' \
-        'r-tibble' \
-        'r-tidyr' \
         'r-tidyverse' \
         'r-validate' \
-        'r-workflowr' \
-        'r-xml2' \
         'r-zeallot' \
-        'r-zoo' \
-        'unixodbc' && \
+        'r-zoo' && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -150,7 +120,6 @@ RUN echo "\n\
 ## Scripting
 ENV CRAN "https://cloud.r-project.org/"
 ENV R_LIB_PATH "/opt/conda/lib/R/library"
-## Setup littler for R scripting
 RUN ln -s $R_LIB_PATH/littler/bin/r /usr/local/bin/r && \
     ln -s $R_LIB_PATH/littler/examples/install.r /usr/local/bin/install.r && \
     ln -s $R_LIB_PATH/littler/examples/install2.r /usr/local/bin/install2.r && \
