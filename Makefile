@@ -34,5 +34,7 @@ dev/%: ## run a foreground container for a stack
 test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests
 
+test-base: $(foreach I, $(BASE_IMAGES), test/$(I))
+
 test-env: ## Make a test environment by installing test dependencies with pip
 	pip install -r requirements-test.txt

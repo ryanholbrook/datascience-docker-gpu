@@ -1,4 +1,4 @@
-ARG BASE_CONTAINER=jupyter/minimal-notebook
+ARG BASE_CONTAINER=rholbrook/minimal-gpu-notebook
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Ryan Holbrook <ryanholbrook@mathformachines.com>"
