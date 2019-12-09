@@ -16,9 +16,6 @@ RUN apt-get update && \
     gcc && \
     rm -rf /var/lib/apt/lists/*
 
-# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
-RUN ln -s /bin/tar /bin/gtar
-
 USER $NB_UID
 
 # R packages
