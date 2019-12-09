@@ -9,3 +9,5 @@ install:
 script:
     - make build-base
     - make test-base
+    - make build-full
+    - make test/datascience-gpu-notebook
