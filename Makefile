@@ -32,7 +32,7 @@ dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
 test/%: ## run tests against a stack
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests
 
 test-env: ## Make a test environment by installing test dependencies with pip
 	pip install -r requirements-test.txt

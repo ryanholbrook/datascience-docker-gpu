@@ -7,5 +7,5 @@ services:
 install:
     - make test-env
 script:
-    - make build
-    - make test
+    - make build/minimal-gpu-notebook
+    - make test/minimal-gpu-notebook
