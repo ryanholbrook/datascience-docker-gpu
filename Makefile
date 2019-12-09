@@ -23,7 +23,7 @@ build-base: $(foreach I, $(BASE_IMAGES), build/$(I))
 build-full: DARGS?=
 build-full: build-base
 build-full: ## Build full stack
-	docker build $(DARGS) --build-arg base-image=$(OWNER)/python-gpu-notebook --rm --force-rm -t $(OWNER)/datascience-gpu-notebook:$(TAG) ./$(notdir $@)
+	docker build $(DARGS) --build-arg base-image=$(OWNER)/python-gpu-notebook --rm --force-rm -t $(OWNER)/datascience-gpu-notebook:$(TAG) ./r-gpu-notebook
 
 dev/%: ARGS?=
 dev/%: DARGS?=
