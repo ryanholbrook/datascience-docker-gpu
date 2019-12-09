@@ -1,4 +1,5 @@
-FROM rholbrook/minimal-gpu-notebook
+ARG BASE_CONTAINER=rholbrook/minimal-gpu-notebook
+FROM $BASE_CONTAINER
 
 LABEL maintainer="Ryan Holbrook <ryanholbrook@mathformachines.com>"
 
@@ -66,6 +67,7 @@ RUN conda install --quiet --yes \
         'r-validate' \
         'r-zeallot' \
         'r-zoo' \
+        'texinfo' \
         'unixodbc' && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \

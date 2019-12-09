@@ -1,6 +1,7 @@
-FROM jupyter/minimal-notebook
+ARG BASE_CONTAINER=jupyter/minimal-notebook
+FROM $BASE_CONTAINER
 
-LABEL maintainer="Ryan Holbrook <ryanholbrook@mathformachines.com>"
+LABEL maintainer="Ryan Holbrook <ryanholbrook@gmail.com>"
 
 USER root
 

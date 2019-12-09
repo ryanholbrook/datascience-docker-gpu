@@ -25,6 +25,9 @@ USER $NB_UID
 RUN conda install --quiet --yes \
         -c conda-forge -c defaults -c gpytorch -c nvidia \
         -c pytorch -c pyviz -c r -c rapidsai \
+        ##### System #####
+        'texinfo' \
+        'unixodbc' \
         ##### Python #####
         'beautifulsoup4' \
         'bokeh' \
@@ -48,7 +51,6 @@ RUN conda install --quiet --yes \
         'sqlalchemy' \
         'statsmodels' \
         'sympy' \
-        'unixodbc' \
         ##### R #####
         'r-arrow' \
         'r-base' \
