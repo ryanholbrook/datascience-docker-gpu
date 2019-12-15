@@ -8,12 +8,12 @@ KEYWORD=()
 POSITIONAL=()
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --dot|-d)
+        --dot)
             DOTS+=("--volume ${2}:/home/jovyan/${2}")
             shift 2
             ;;
-        --project|-p)
-            PROJECT="${2}"
+        --work)
+            WORK="${2}"
             shift 2
             ;;
         --*|-*)
@@ -30,7 +30,10 @@ done
 XAUTH="/run/user/Xauthority"
 
 echo "Running"
-echo "Project: ${PROJECT}"
+echo "Work Directory: ${WORK}"
+echo "Config Files: ${DOTS[@]}"
+echo "Keyword Args: ${KEYWORD[@]}"
+echo "Positional Args: ${POSITIONAL[@]}"
 
 docker run \
        --rm \
@@ -41,9 +44,10 @@ docker run \
        --env DISPLAY=$DISPLAY \
        --env XAUTHORITY=$XAUTH \
        --volume $XAUTHORITY:$XAUTH \
-       --volume $PROJECT:"/home/jovyan/project" \
-       $DOTS \
-       $KEYWORD \
-       rholbrook/r-gpu-notebook \
-       $POSITIONAL \
+       --volume $WORK:"/home/jovyan/work" \
+       --workdir "/home/jovyan/work" \
+       ${DOTS[@]} \
+       ${KEYWORD[@]} \
+       rholbrook/gpu-notebook \
+       ${POSITIONAL[@]} \
        start.sh
