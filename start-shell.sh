@@ -48,6 +48,6 @@ docker run \
        --workdir "/home/jovyan/work" \
        ${DOTS[@]} \
        ${KEYWORD[@]} \
-       rholbrook/gpu-notebook \
+       rholbrook/datascience-gpu-notebook \
        ${POSITIONAL[@]} \
        start.sh
