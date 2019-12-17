@@ -14,14 +14,11 @@ RUN apt-get update && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-
 USER $NB_UID
 
-# R packages
 RUN conda install --quiet --yes \
         -c conda-forge -c defaults -c gpytorch -c nvidia \
         -c pytorch -c pyviz -c r -c rapidsai \
-        ##### Python #####
         'beautifulsoup4' \
         'bokeh' \
         'cloudpickle' \
@@ -38,7 +35,6 @@ RUN conda install --quiet --yes \
         'numexpr' \
         'numpy' \
         'pandas' \
-        'panel' \
         'patsy' \
         'protobuf' \
         'psycopg2' \
@@ -85,8 +81,6 @@ ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
     fix-permissions /home/$NB_USER
 
-USER $NB_UID
-
 ## Additional Pytorch libraries
 RUN pip install --no-cache-dir \
         ax-platform \
@@ -97,13 +91,5 @@ RUN pip install --no-cache-dir \
         pytorch-lightning \
         pyro-ppl \
         flair && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-## Tensorflow
-RUN pip install --no-cache-dir \
-        tensorflow-gpu==2.0.0 \
-        tensorflow-probability==0.8 \
-        keras==2.3.1 && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
