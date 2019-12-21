@@ -7,6 +7,10 @@ Docker images built off of [`jupyter/minimal-notebook`](https://github.com/jupyt
 
 Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-docker-gpu) for issues, pull requests, etc.
 
+### Requirements
+
+See [here](https://github.com/NVIDIA/nvidia-docker/wiki/Installation-(Native-GPU-Support)).
+
 <!-- ### Quickstart -->
 <!-- Clone the repository. -->
 <!-- ``` -->
@@ -22,7 +26,7 @@ Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-d
 <!-- **WARNING:** Only data in your `project` directory will be saved after the container exits. If you have data elsewhere and you quit the container, it is gone forever. *(You can also mount persistant storage with `--volume` as usual with `docker`.)* -->
 
 ## Contents
-There are three images in this repository:
+There are four images in this repository:
   * `rholbrook/minimal-gpu-notebook` Everything in `jupyter/minimal-notebook` with [CUDA 10.0](https://developer.nvidia.com/cuda-zone) development libraries.
   * `rholbrook/python-gpu-notebook` Everything in `jupyter/scipy-notebook` with, in addition, [Pytorch](https://pytorch.org/) and a number of its extension libraries: [Ignite](https://pytorch.org/ignite/), [fast.ai](https://www.fast.ai/), [Lightning](https://github.com/williamFalcon/pytorch-lightning), [skorch](https://github.com/skorch-dev/skorch), [Ax](https://ax.dev/), [GPyTorch](https://github.com/cornellius-gp/gpytorch), [Pyro](http://pyro.ai/), [Flair](https://github.com/zalandoresearch/flair), [PyTorch Geometric](https://github.com/rusty1s/pytorch_geometric), and [Captum](https://captum.ai/). Also includes all the [RAPIDS](https://docs.rapids.ai/api) libraries.
   * `rholbrook/r-gpu-notebook` Everything in `jupyter/r-notebook` with also [Tensorflow](https://www.tensorflow.org/), [Keras](https://keras.io/), and [Greta](https://greta-stats.org/).
