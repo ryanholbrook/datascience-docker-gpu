@@ -20,10 +20,30 @@ build/%: ## Make the latest build of the image
 
 build-base: $(foreach I, $(BASE_IMAGES), build/$(I))
 
-build-full: DARGS?=
-build-full: build-base
-build-full: ## Build full stack
+build-all: DARGS?=
+build-all: build-base
+build-all: ## Build full stack
 	docker build $(DARGS) --build-arg BASE_CONTAINER=$(OWNER)/python-gpu-notebook --rm --force-rm -t $(OWNER)/datascience-gpu-notebook:$(TAG) ./r-gpu-notebook
+
+push/%:
+	docker push $(OWNER)/$(notdir $@):$(TAG)
+
+push-base: $(foreach I, $(BASE_IMAGES), push/$(I))
+
+push-all: push-base
+push-all:
+	docker push $(OWNER)/datascience-gpu-notebook:$(TAG)
+
+test/%: ## run tests against a stack
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests
+
+test-base: $(foreach I, $(BASE_IMAGES), test/$(I))
+
+test-all: test-base
+test-all: test/datascience-gpu-notebook
+
+test-env: ## Make a test environment by installing test dependencies with pip
+	pip install -r requirements-test.txt
 
 dev/%: ARGS?=
 dev/%: DARGS?=
@@ -31,10 +51,3 @@ dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
-test/%: ## run tests against a stack
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests
-
-test-base: $(foreach I, $(BASE_IMAGES), test/$(I))
-
-test-env: ## Make a test environment by installing test dependencies with pip
-	pip install -r requirements-test.txt

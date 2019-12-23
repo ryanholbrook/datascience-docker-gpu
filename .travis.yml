@@ -1,16 +1,20 @@
 branches:
-    except:
-    - master
+  except:
+  - master
 language: python
 python:
-    - 3.7
+- 3.7
 sudo: required
 services:
-    - docker
+- docker
 install:
-    - make test-env
+- make test-env
 script:
-    - make build-base
-    - make test-base
-    - make build-full
-    - make test/datascience-gpu-notebook
+- make build-all
+- make test-all
+- docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
+- make push-all
+env:
+  global:
+  - secure: VmFJVtf0rwNXMNnaaku0916tPuIqWhOa2jBDKqjYcoOZrKeKY08Eb5eIwWyosT1JYrBvLPoeVj1eK+Qpk+L+wuCjBerVNjGabAF4qIFPQAmiQ6ypXEqHmJuJNUYdahcJiicZLbYGMLlFgV6iZ8h82Z3GVQ0LDS4aJDvaVwQamdee5gfTkgkWJCMdUUEl4RYWH+j6VHC5VrKLFwZbwPiU2J8W+SzmizDQV2rR7/Q/DXQxmmpQqIO6DhwAh+nbfBhiR737LYLYiLuXPwBL0/rkNMcHm4t0TKN0zfzzLxpcsi+grpOgmQs9o3gACQpTOJVfR9IPpiejhV3sPgjN7feX6PqBiXcmkAhwFzRN4GMpjFtuWx6gu+MunxiRO4k/7mK/ny5bTM8BK++W99dyuRh2bxiPno9p5TjBN+QxpyrkspEPAVlYfYnfqzH+PXBf/280+Gc/I9oZeIde4jPthAqYozzYT5u9zHeS0IjkjeZZZ9v11292yceCneQVtd2mQWE8ii2ha4u6KLUmHKRZnHj7xWqKaIPK440UhiK1e3CzQbzlVKbrjeQ6om6Hi60heCwB3lINS6deEx2DIbgUxplTDPvt95Hbgari+rzEqJl9nT8QcDDnh3qdRyjNT7Ax1Gypa5+GZ/jV2c2t2vPSBmdZSqvLgD+4S+5QNhmMKVKtknU=
+  - secure: VSG3k7Dn+s1kvLRDzPwdlAKsBNNR4j8G6a/OT38TxuuXT5/jUF+Ri2z+LwRQAqe2wYYVYcAmbRI5OjeUCvewNP2BFt+BAdmRU0JcPNDJSv/IJlzxKHpYTLrMia/CdL43OyfPhePrUf8Yo6MCwmoW/MAl/vBpnD8feYvd8z3i+btMcPqyR5F2L1iyocWSxf8Ln3zcHk1rNarM/SUTxLJfNPLr5I8UgTEYxS92tOWFNNXAjjnt/viWNd6bLGFx2SVxkxsc8M/rI+6/etVk21XMf9NlzOSBmAuzWlGM4Ytt2tz4jKcW39lq6gswVn4h3ky6l7fqz47xcGs4NkkgoMH0SuEe3ybh1HT9pCsbgFxLO10I2LxJz6kKcW8+/GfVSRfjlQ3qkE2yUjicYnWr0pk4Apk15kkOu0orMXdOochaZFT9S03OQu0QK0NvAN91rfUZYD2sM8H/d8BzIuKHJzvrwDvcLNyRH5WVv8IBY2stbvXaP365HWlYiVjZ4jRCF1SlPH8W+vHgp7ved5oMgFOy7PpvngAopZ3TZpDNNoEwE8LPB3G+/Dkyly27wIysSCPO8VloVSmlACxbVgvVQ4K4aTw4Khro1fcTScp7qRthtDtljir3G0mgKHHBi1ejjWjnFhK3M5ujk+Y1zahEFU7rMbHhZXK+noCtHzKIy26e1GQ=
