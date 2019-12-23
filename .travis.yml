@@ -15,6 +15,8 @@ script:
 deploy:
   provider: script
   script: (echo "$DOCKER_ACCESS_TOKEN" | docker login -u $DOCKER_USERNAME --password-stdin) && make push-all
+  on:
+    branch: testing
 env:
   global:
   - secure: EyJDw93NariIJKD8c0vQ42UuAkbZcrqA5+4Qv6Gww/TIrn6LU2INz34nn3O1z+tkjltBQTqRZpnK9VGOWORZ+j3Z9yqersP+08KVc/hQwqQrtCJEFj6ynmp3v22xrNtEn2FDNPLx0ZIKgHsTZ/3mfBjZ6HWSLYmyY71Tw4knGay8sQlF6w7LvtnZLi2abyIZaGOwuFx4v1GJbAS/4U8ISF6HKs95PSFp0YJU9LFwCPyxvQALW84Xt3xVJpNf712nZWMJgQZpMcMJq72UVBDdB9qExn8zCZKEn7A0ZTgSwBQ8Q6wxLS1BVDFTwCBtS3Awi4NTDVoWwR3LjpiQxBlC0Hibtex2OCAWH17mldk6FH8XbM0cqhU+kVhrBjtz4auVFfG41iyR6nV4cBjqer/uvEH63Re7WIKQMioeQkhTqhL3jbN8jtMm9ir77ifs93B8v4d4rl2OJaIEbW6wOObQM1uDpp4iZY50IRF36/UYHZwp3PeUmxHjBRMGIeHX/KGvTu0TO/KtWMfM7jREfR1miJgloHFj9ZiStZ7nk/MV8UQW4ccZSLo2C35/8mRAV3VNI6QZkgK3UwZL0GeMXcCrHofdUVYC6Xkx8GRUGWFlNUdoWWo7fjvkoSlOc+P/W4e/Ukg8klOjGpAR3QYokC++HmvRfM30lAmqWHUCivOaWng=
