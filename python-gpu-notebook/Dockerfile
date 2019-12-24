@@ -87,7 +87,8 @@ RUN pip install --no-cache-dir \
         captum \
         torch-geometric \
         skorch \
-        tiny-tokenizer \ # see flairNLP/flair issue #1327 (23/12/2019)
+        ## see flairNLP/flair issue #1327 (23/12/2019)
+        tiny-tokenizer \
         fastai \
         pytorch-lightning \
         pyro-ppl \
