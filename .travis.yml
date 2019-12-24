@@ -22,11 +22,9 @@ jobs:
         on:
           branch: testing
     - stage: compound
-      install:
-      - make test-env
+      install: skip
       script:
       - make build/datascience-gpu-notebook
-      - make test/datascience-gpu-notebook
       deploy:
         provider: script
         script: (echo "$DOCKER_ACCESS_TOKEN" | docker login -u $DOCKER_USERNAME --password-stdin) && make push/datascience-gpu-notebook
