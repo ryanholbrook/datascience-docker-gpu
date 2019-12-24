@@ -1,4 +1,4 @@
-.PHONY: help build dev test test-env
+.PHONY: help build dev test test-env push
 
 # Docker image name and tag
 OWNER := rholbrook
@@ -20,10 +20,14 @@ build/%: ## Make the latest build of the image
 
 build-base: $(foreach I, $(BASE_IMAGES), build/$(I))
 
+build/datascience-gpu-notebook: DARGS?=
+build/datascience-gpu-notebook:
+	docker build $(DARGS) --build-arg BASE_CONTAINER=$(OWNER)/python-gpu-notebook -t $(OWNER)/datascience-gpu-notebook:$(TAG) ./r-gpu-notebook
+
+
 build-all: DARGS?=
 build-all: build-base
-build-all: ## Build full stack
-	docker build $(DARGS) --build-arg BASE_CONTAINER=$(OWNER)/python-gpu-notebook -t $(OWNER)/datascience-gpu-notebook:$(TAG) ./r-gpu-notebook
+build-all: build-datascience-gpu-notebook
 
 push/%:
 	docker push $(OWNER)/$(notdir $@):$(TAG)

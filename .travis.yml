@@ -1,17 +1,27 @@
 branches:
   except:
-  - master
+    - master
 language: python
 python:
-- 3.7
+  - 3.7
 sudo: required
 services:
-- docker
-install:
-- make test-env
-script:
-- make build-all
-- make test-all
+  - docker
+
+jobs:
+  include:
+    - stage: base
+      install:
+      - make test-env
+      script:
+      - make build-base
+      - make test-base
+    - stage: compound
+      install: skip
+      script:
+      - make build/datascience-gpu-notebook
+      - make test/datascience-gpu-notebook
+
 deploy:
   provider: script
   script: (echo "$DOCKER_ACCESS_TOKEN" | docker login -u $DOCKER_USERNAME --password-stdin) && make push-all
