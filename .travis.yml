@@ -22,7 +22,8 @@ jobs:
         on:
           branch: testing
     - stage: compound
-      install: skip
+      install:
+      - make test-env
       script:
       - make build/datascience-gpu-notebook
       - make test/datascience-gpu-notebook
