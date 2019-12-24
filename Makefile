@@ -16,13 +16,13 @@ help:
 
 build/%: DARGS?=
 build/%: ## Make the latest build of the image
-	docker build $(DARGS) -t $(OWNER)/$(notdir $@):$(TAG) ./$(notdir $@)
+	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):$(TAG) ./$(notdir $@)
 
 build-base: $(foreach I, $(BASE_IMAGES), build/$(I))
 
 build/datascience-gpu-notebook: DARGS?=
 build/datascience-gpu-notebook:
-	docker build $(DARGS) --build-arg BASE_CONTAINER=$(OWNER)/python-gpu-notebook -t $(OWNER)/datascience-gpu-notebook:$(TAG) ./r-gpu-notebook
+	docker build $(DARGS) --rm --force-rm -t --build-arg BASE_CONTAINER=$(OWNER)/python-gpu-notebook $(OWNER)/datascience-gpu-notebook:$(TAG) ./r-gpu-notebook
 
 
 build-all: DARGS?=
