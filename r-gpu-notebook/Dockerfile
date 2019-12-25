@@ -49,6 +49,7 @@ RUN conda install --quiet --yes \
         'r-mass' \
         'r-mlbench' \
         'r-randomforest' \
+        'r-rcpparmadillo' \
         'r-reticulate' \
         'r-rgl' \
         'r-rio' \
