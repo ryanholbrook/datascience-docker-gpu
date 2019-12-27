@@ -9,21 +9,33 @@ Please see the [GitHub repository](https://github.com/ryanholbrook/datascience-d
 
 ### Requirements
 
-See [here](https://github.com/NVIDIA/nvidia-docker/wiki/Installation-(Native-GPU-Support)).
+You will need an up-to-date version of [Docker](https://docs.docker.com/install/), 
+and a modern NVIDIA GPU with an up-to-date driver. See [here](https://github.com/NVIDIA/nvidia-docker/wiki/Installation-(Native-GPU-Support)) for more details.
 
-<!-- ### Quickstart -->
-<!-- Clone the repository. -->
-<!-- ``` -->
-<!-- git clone https://github.com/ryanholbrook/datascience-docker-gpu.git -->
-<!-- ``` -->
+### Quickstart
+Clone the repository.
+```
+git clone https://github.com/ryanholbrook/datascience-docker-gpu.git
+cd datascience-docker-gpu
+```
 
-<!-- Download the image from Docker Hub and launch a Jupyter Notebook session with your (host) directory `/home/yourname/project/` mounted inside the container. -->
-<!-- ``` -->
-<!-- cd datascience-docker-gpu/full/ -->
-<!-- ./datasci.sh --project /home/yourname/project/ -->
-<!-- ``` -->
+Download the image from Docker Hub and launch a shell session.
+```
+./start.sh
+```
 
-<!-- **WARNING:** Only data in your `project` directory will be saved after the container exits. If you have data elsewhere and you quit the container, it is gone forever. *(You can also mount persistant storage with `--volume` as usual with `docker`.)* -->
+Alternatively, start a Jupyter notebook session.
+```
+./start.sh notebook
+```
+
+Say you have a project on your host machine in the directory `/home/myname/project`. You can mount this directory inside the containers working directory like this:
+```
+./start.sh --work "/home/myname/project"
+```
+The default username in the Jupyter images is `jovyan` and the default working directory is `work`. Your project directory will therefore be mounted at `/home/jovyan/work/`.
+
+**WARNING:** Only data in the `/home/jovyan/work` directory will be saved after the container exits. If you have data elsewhere and you quit the container, it is gone forever. *(The script passes on arguments to the `docker` command, so you can also mount persistant storage with `--volume` as usual.)*
 
 ## Contents
 There are four images in this repository:
@@ -38,21 +50,20 @@ The intention is for someone to be able to have a complete development environme
 <!--   * [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:cuda-only.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags) `:pytorch`  -->
 <!--   * [![Download Size](https://images.microbadger.com/badges/image/rholbrook/datascience:full.svg)](https://hub.docker.com/repository/docker/rholbrook/datascience/tags) `:full` -->
 
-<!-- ## Usage Examples -->
+## Usage
 
-<!-- Test the installation: -->
-<!-- ``` -->
-<!-- docker run --rm --gpus all rholbrook/datascience:cuda-only nvidia-smi -->
-<!-- ``` -->
+I recommend using `start.sh` to interact with these images. The script automatically provides support for GPUs as well as interaction with the windowing system on the host machine. You can as always launch the container using `docker` directly, though you will need to use `--gpus all` to enable GPU support. See [here](https://github.com/NVIDIA/nvidia-docker) under **Usage** for details.
 
-<!-- Open an IPython session: -->
-<!-- ``` -->
-<!-- docker run --rm -it --gpus all rholbrook/datascience:pytorch ipython -->
-<!-- ``` -->
+Use `start.sh` to start a Bash shell in the container, or use `start.sh notebook` to start a Jupyter notebook server. You can use `--work <directory>` to mount a directory on your host machine as your working directory (`/home/jovyan/work`) in the container, and you can use `--dot <filepath>` to mount a file from your host machine into your home directory (`/home/jovyan`) in the container. You can also use [any of the usual arguments](https://docs.docker.com/engine/reference/commandline/cli/) for the Docker command line. See the [Jupyter Docker stacks documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html) for more on running and customizing these images.
 
-<!-- Start a Jupyter notebook server: -->
-<!-- ``` -->
-<!-- docker run --rm --gpus all rholbrook/datascience:full -->
-<!-- ``` -->
+### Examples
 
-<!-- In the `full` directory there is a script `start-shell.sh`. Running it will enter a `bash` shell with container options `-it --rm --gpus all` and X-forwarding enabled. Alternatively, specify a command to run instead of `bash`. You can also use of the usual `docker` [options](https://docs.docker.com/engine/reference/run/) or the [options](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html) from the original Jupyter images. See the script for more details. -->
+I usually do something like this:
+```
+./start.sh --memory 30g --work /home/ryan/project --dot /home/ryan/.gitconfig --dot /home/ryan/.Renviron
+```
+This *1.* limits the container to 30g of RAM on the host machine, *2.* mounts the directory of the project I want to work on, and *3.* includes my Git and R config files.
+
+------
+
+Please file an Issue if you have any trouble.

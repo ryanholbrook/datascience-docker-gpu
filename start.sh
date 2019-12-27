@@ -14,7 +14,8 @@ while [[ "$#" -gt 0 ]]; do
             shift
             ;;
         --dot)
-            DOTS+=("--volume ${2}:/home/jovyan/${2}")
+            filename=$(basename "${2}")
+            DOTS+=("--volume ${2}:/home/jovyan/${filename}")
             shift 2
             ;;
         --work)
