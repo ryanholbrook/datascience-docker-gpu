@@ -36,6 +36,7 @@ RUN conda install --quiet --yes \
         'r-fst' \
         'r-future' \
         'r-future.apply' \
+        'r-gdtools' \
         'r-glmnet' \
         'r-glue' \
         'r-gmp' \
@@ -62,6 +63,7 @@ RUN conda install --quiet --yes \
         'r-rweka' \
         'r-servr' \
         'r-shiny' \
+        'r-svglite' \
         'r-testthat' \
         'r-tidyverse' \
         'r-validate' \
