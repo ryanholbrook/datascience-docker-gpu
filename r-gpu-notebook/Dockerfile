@@ -63,9 +63,11 @@ RUN conda install --quiet --yes \
         'r-rweka' \
         'r-servr' \
         'r-shiny' \
+        'r-sf' \
         'r-svglite' \
         'r-testthat' \
         'r-tidyverse' \
+        'r-units' \
         'r-validate' \
         'r-zeallot' \
         'r-zoo' \
