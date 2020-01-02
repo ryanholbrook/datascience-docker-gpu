@@ -18,8 +18,7 @@ build/%: DARGS?=
 build/%: ## Make the latest build of the image
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):$(TAG) ./$(notdir $@)
 
-build-base: ## Make the minimal, R, and Python stacks
-	$(foreach I, $(BASE_IMAGES), build/$(I))
+build-base: $(foreach I, $(BASE_IMAGES), build/$(I)) ## Make the minimal, R, and Python stacks
 
 build/datascience-gpu-notebook: DARGS?=
 build/datascience-gpu-notebook: # Make a stack containing everything
