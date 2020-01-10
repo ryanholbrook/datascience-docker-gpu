@@ -33,8 +33,6 @@ while [[ "$#" -gt 0 ]]; do
     esac
 done
 
-XAUTH="/run/user/Xauthority"
-
 echo "Running"
 echo "Work Directory: ${WORK}"
 echo "Config Files: ${DOTS[@]}"
@@ -46,10 +44,9 @@ docker run \
        --interactive \
        --tty \
        --gpus all \
-       --network=host\
        --env DISPLAY=$DISPLAY \
-       --env XAUTHORITY=$XAUTH \
-       --volume $XAUTHORITY:$XAUTH \
+       --ipc=host \
+       --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
        --volume $WORK:"/home/jovyan/work" \
        --workdir "/home/jovyan/work" \
        ${DOTS[@]} \
