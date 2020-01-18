@@ -1,0 +1,24 @@
+{% import "macros.jinja2" as m with context %}
+{% set languages = [r] %}
+ARG BASE_CONTAINER=rholbrook/minimal-gpu-notebook
+FROM $BASE_CONTAINER
+
+LABEL maintainer="Ryan Holbrook <ryanholbrook@mathformachines.com>"
+
+##### jupyter/r-notebook #####
+
+# R pre-requisites
+{{ m.apt(languages) }}
+
+# R packages
+{{ m.conda(languages, ["r"]) }}
+
+########## Tensorflow ##########
+
+{{ m.pip(languages) }}
+
+########## Setup R ##########
+
+{{ m.setup_r() }}
+
+USER $NB_USER

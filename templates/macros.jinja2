@@ -1,0 +1,169 @@
+{# Macros for Dockerfile construction #}
+{# ################################## #}
+
+{% macro list_packages(repo) %}
+    {% for package in repo %}
+    '{{ package.name }}{{ package.version }}' \
+    {% endfor %}
+{% endmacro %}
+
+
+{# Sources #}
+{# ####### #}
+
+{% macro apt(langs) %}
+USER root
+  
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+  {% for l in langs -%}
+{{ list_packages(l.apt) }}
+  {%- endfor %}    && \
+    rm -rf /var/lib/apt/lists/* && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+{% endmacro %}
+
+
+{% macro conda(langs, channels) %}
+USER $NB_UID
+
+RUN conda install --quiet --yes \
+  {% for c in channels %}
+    -c {{ c }} \
+  {% endfor %}
+  {%- for l in langs -%}
+{{ list_packages(l.conda) }}
+  {%- endfor %}    && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+{% endmacro %}
+
+
+{% macro pip(langs) %}
+USER $NB_USER
+  
+RUN pip install --no-cache-dir \
+  {% for l in langs -%}
+{{ list_packages(l.pip) }}
+  {%- endfor %}    && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+{% endmacro %}
+
+
+{% macro pkg(langs) %}
+# Add Julia packages. Only add HDF5 if this is not a test-only build since
+# it takes roughly half the entire build time of all of the images on Travis
+# to add this one package and often causes Travis to timeout.
+#
+# Install IJulia as jovyan and then move the kernelspec out
+# to the system share location. Avoids problems with runtime UID change not
+# taking effect properly on the .local folder in the jovyan home dir.
+RUN julia -e 'import Pkg; Pkg.update()' && \
+#    (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    {% for l in langs -%}
+{{ list_packages(l.pkg) }}
+    {%- endfor %}    && \
+    # move kernelspec out of home \
+    mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter && \
+    rm -rf $HOME/.local && \
+    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
+{% endmacro %}
+
+
+{# Language Specific #}
+{# ################# #}
+{% macro setup_python() %}
+USER $NB_USER
+
+## Activate ipywidgets extension in the environment that runs the notebook server
+RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
+    # Also activate ipywidgets extension for JupyterLab
+    # Check this URL for most recent compatibilities
+    # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.0.1 --no-build && \
+    jupyter labextension install jupyterlab_bokeh@1.0.0 --no-build && \
+    jupyter lab build --dev-build=False && \
+    npm cache clean --force && \
+    rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
+    rm -rf /home/$NB_USER/.cache/yarn && \
+    rm -rf /home/$NB_USER/.node-gyp && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+## Install facets which does not have a pip or conda package at the moment
+RUN cd /tmp && \
+    git clone https://github.com/PAIR-code/facets.git && \
+    cd facets && \
+    jupyter nbextension install facets-dist/ --sys-prefix && \
+    cd && \
+    rm -rf /tmp/facets && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+## Import matplotlib the first time to build the font cache.
+ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
+RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
+    fix-permissions /home/$NB_USER
+{% endmacro %}
+
+{% macro setup_r() %}
+USER root
+
+RUN echo "\n\
+        \nCUDA_HOME=$CUDA_HOME \
+        \nCUDA_PATH=$CUDA_PATH \
+        \nPATH=$PATH" >> $(R RHOME)/etc/Renviron.site && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+## Scripting
+ENV CRAN "https://cloud.r-project.org/"
+ENV R_LIB_PATH "/opt/conda/lib/R/library"
+RUN ln -s $R_LIB_PATH/littler/bin/r /usr/local/bin/r && \
+    ln -s $R_LIB_PATH/littler/examples/install.r /usr/local/bin/install.r && \
+    ln -s $R_LIB_PATH/littler/examples/install2.r /usr/local/bin/install2.r && \
+    ln -s $R_LIB_PATH/littler/examples/installGithub.r /usr/local/bin/installGithub.r && \
+    rm -rf /tmp/* && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+USER $NB_USER
+RUN install2.r -l $R_LIB_PATH -r $CRAN \
+{{ list_packages(r.cran) }}    && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+USER root
+
+RUN ln -s /opt/conda/bin/* /usr/local/bin/
+{% endmacro %}
+
+{% macro install_julia() %}
+USER root
+  
+# Julia dependencies
+# install Julia packages in /opt/julia instead of $HOME
+ENV JULIA_DEPOT_PATH=/opt/julia
+ENV JULIA_PKGDIR=/opt/julia
+ENV JULIA_VERSION=1.2.0
+
+RUN mkdir /opt/julia-${JULIA_VERSION} && \
+    cd /tmp && \
+    wget -q https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
+    echo "926ced5dec5d726ed0d2919e849ff084a320882fb67ab048385849f9483afc47 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
+    rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz
+RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
+
+# Show Julia where conda libraries are \
+RUN mkdir /etc/julia && \
+    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
+    # Create JULIA_PKGDIR \
+    mkdir $JULIA_PKGDIR && \
+    chown $NB_USER $JULIA_PKGDIR && \
+    fix-permissions $JULIA_PKGDIR
+{% endmacro %}

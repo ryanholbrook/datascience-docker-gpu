@@ -1,0 +1,35 @@
+{% import "macros.jinja2" as m with context %}
+{% set languages = [python, r, julia] %}
+ARG BASE_CONTAINER=rholbrook/minimal-gpu-notebook
+FROM $BASE_CONTAINER
+
+LABEL maintainer="Ryan Holbrook <ryanholbrook@mathformachines.com>"
+
+########## Root Installs ##########
+
+{{ m.apt(languages) }}
+
+{{ m.install_julia() }}
+
+########## Conda ##########
+
+{{ m.conda(languages, ["conda-forge", "defaults", "gpytorch", "nvidia", "pytorch", "pyviz", "rapidsai", "r"]) }}
+
+########## Setup Python ##########
+
+{{ m.setup_python() }}
+
+########## Pip ##########
+
+{{ m.pip(languages) }}
+
+########## Setup R ##########
+
+{{ m.setup_r() }}
+
+########## Pkg ##########
+
+{# {{ m.pkg(languages) }} #}
+
+
+USER $NB_USER
